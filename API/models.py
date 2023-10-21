@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 
+
 class Post(models.Model):
     title = models.CharField(max_length = 200, verbose_name = 'عنوان')
     text = models.TextField(blank = True)
@@ -11,8 +12,6 @@ class Post(models.Model):
     updated_date = models.DateTimeField(auto_now = True)
 
     objects = models.Manager()
-    live = PostLiveManager()
-
 
     def __str__(self):
         return self.title

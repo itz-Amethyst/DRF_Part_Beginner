@@ -43,6 +43,28 @@ class PostListView(APIView):
             return Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)
 
 
+class PostList(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+    def list(self, request):
+        posts = Post.objects.all()
+        # For more than 1 object we should set many to true
+        data = PostSerializer(posts, many = True).data
+        return Response(data)
+
+    def create(self, request):
+        serializer = PostSerializer(data = request.data)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status= status.HTTP_400_BAD_REQUEST)
+
+
+
+
 class PostDetailView(APIView):
 
     def get(self, request, post_id):
