@@ -1,5 +1,5 @@
 
-from rest_framework import status
+from rest_framework import status , permissions
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -71,7 +71,7 @@ from .serializer import PostSerializer
 #         return Response(status = status.HTTP_204_NO_CONTENT)
 
 
-##* Viewsets found on document
+##* Viewsets found on document but it's custom all this methods is implemented no need to write again
 # class PostList(viewsets.ModelViewSet):
 #     queryset = Post.objects.all()
 #     serializer_class = PostSerializer
@@ -95,26 +95,51 @@ from .serializer import PostSerializer
 
 ##! These methods used generic methods it's easier and implemented some functions before
 
-class PostListView(generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
+# class PostListView(generics.GenericAPIView, mixins.ListModelMixin, mixins.CreateModelMixin):
+#     queryset = Post.objects.all()
+#     serializer_class = PostSerializer
+#
+#     def get(self, request, **kwargs ):
+#         return self.list()
+#
+#     def post(self, request, **kwargs ):
+#         return self.create()
+
+
+# class PostDetailView(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
+#     queryset = Post.objects.all()
+#     serializer_class = PostSerializer
+#     permission_classes = [permissions.AllowAny]
+#
+#
+#     def get(self, request, *args, **kwargs):
+#         return self.retrieve(request, *args, **kwargs)
+#
+#     def put(self, request, *args, **kwargs):
+#         return self.update(request, *args, **kwargs)
+#
+#     def delete(self, request, *args, **kwargs):
+#         return self.destroy(request, *args, **kwargs)
+
+
+
+##! This one is exactly like up but in shorter version not recommended if you want to play with data more customizable than
+class PostListView(generics.ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-
-    def get(self, request, **kwargs ):
-        return self.list()
-
-    def post(self, request, **kwargs ):
-        return self.create()
+    permission_classes = [permissions.AllowAny]
 
 
-class PostDetailView(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
+#? Note: diff between update and partial update is partial only send specific data f.e.g we have a model named user it has 3 prop username, email, password if you want to update only username use partial update
+class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    permission_classes = [permissions.AllowAny]
 
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
 
-    def put(self, request, *args, **kwargs):
-        return self.update(request, *args, **kwargs)
 
-    def delete(self, request, *args, **kwargs):
-        return self.destroy(request, *args, **kwargs)
+## * Note all in one CRUD even with id but not customizable all static
+class PostView(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticated]
