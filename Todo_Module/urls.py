@@ -13,4 +13,9 @@ urlpatterns = [
     #! MixIns
     path('mixins/', TodosListMixinApiView.as_view(), name='mixins'),
     path('mixins/<pk>', TodosDetailMixinApiView.as_view(), name='mixins_detail'),
+
+    #? Generics
+    path('generics/' , TodosGenericApiView.as_view()) ,
+    path('generics/<pk>' , TodosDetailGenericApiView.as_view()),
+
 ]
