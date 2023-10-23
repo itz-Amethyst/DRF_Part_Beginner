@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth import get_user_model
 
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -8,12 +9,13 @@ from rest_framework import generics , mixins
 from rest_framework import viewsets
 
 from Todo_Module.models import Todo
-from Todo_Module.serializer import TodoSerializer
+from Todo_Module.serializer import TodoSerializer , UserSerializer
 from utils.CustomMethods import get_object
 
 
 # Create your views here.
 
+User = get_user_model()
 
 def Index( request ):
     context = {
@@ -127,3 +129,11 @@ class TodosViewSetApiView(viewsets.ModelViewSet):
 
 
 #endregion
+
+class UserGenericApiView(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+#region Users

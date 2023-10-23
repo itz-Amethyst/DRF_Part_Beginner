@@ -25,6 +25,8 @@ urlpatterns = [
 
     #* ViewSets
     #!Note: you can declare path here or on top inside register, prefix
-    path('', include(router.urls))
+    path('', include(router.urls)),
 
+
+    path('users/' , UserGenericApiView.as_view())
 ]
