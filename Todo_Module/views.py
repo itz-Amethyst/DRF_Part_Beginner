@@ -28,9 +28,16 @@ def todo_json(request: Request):
     return Response({'todos': todos}, status = status.HTTP_200_OK)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 @permission_classes([permissions.AllowAny])
 def all_todos_w_serializer(request: Request):
-    todos = Todo.objects.order_by('-priority').all()
-    todo_serializer = TodoSerializer(todos, many = True)
-    return Response({'todos': todo_serializer.data}, status = status.HTTP_200_OK)
+    if request.method == 'GET':
+        todos = Todo.objects.order_by('-priority').all()
+        todo_serializer = TodoSerializer(todos, many = True)
+        return Response({'todos': todo_serializer.data}, status = status.HTTP_200_OK)
+    elif request.method == 'POST':
+        serializer = TodoSerializer(data = request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status = status.HTTP_201_CREATED)
+    return Response({'message': "bad req"}, status = status.HTTP_400_BAD_REQUEST)
