@@ -1,5 +1,10 @@
-from  django.urls import path
+from  django.urls import path, include
 from .views import *
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+router.register('ViewSets', TodosViewSetApiView)
+
 
 urlpatterns = [
     path('', Index, name='index_page'),
@@ -17,5 +22,9 @@ urlpatterns = [
     #? Generics
     path('generics/' , TodosGenericApiView.as_view()) ,
     path('generics/<pk>' , TodosDetailGenericApiView.as_view()),
+
+    #* ViewSets
+    #!Note: you can declare path here or on top inside register, prefix
+    path('', include(router.urls))
 
 ]

@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status , permissions
 from rest_framework.views import APIView
 from rest_framework import generics , mixins
+from rest_framework import viewsets
 
 from Todo_Module.models import Todo
 from Todo_Module.serializer import TodoSerializer
@@ -101,6 +102,7 @@ class TodosDetailMixinApiView(mixins.RetrieveModelMixin , mixins.UpdateModelMixi
 
 #endregion
 
+
 # region Generics
 
 class TodosGenericApiView(generics.ListCreateAPIView):
@@ -114,3 +116,14 @@ class TodosDetailGenericApiView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = TodoSerializer
     permission_classes = [permissions.AllowAny]
 # endregion
+
+
+#region ViewSets
+
+class TodosViewSetApiView(viewsets.ModelViewSet):
+    queryset = Todo.objects.all()
+    serializer_class = TodoSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+#endregion
