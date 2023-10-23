@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'API',
+    'Todo_Module',
     'rest_framework',
     'rest_framework_swagger',
     'drf_yasg'

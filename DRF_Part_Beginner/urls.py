@@ -33,6 +33,7 @@ schema_view = get_schema_view(
 
 
 urlpatterns = [
+    path('', include('Todo_Module.urls')),
     path('admin/', admin.site.urls),
     path('posts/', include('API.urls2')),
     path('api-auth/', include('rest_framework.urls')),
