@@ -50,7 +50,7 @@ from .serializer import PostSerializer
 # class PostDetailView(APIView):
 #
 #     def get(self, request, post_id):
-#         post = get_object(self , post_id)
+#         post = get_object(object_id = post_id, object = Post)
 #
 #         serializer = PostSerializer(post)
 #
@@ -58,7 +58,7 @@ from .serializer import PostSerializer
 #
 #     def put(self, request, post_id):
 #
-#         post = get_object(self, post_id)
+#         post = get_object(self , object_id = post_id, object = Post)
 #
 #         serializer = PostSerializer(post , data = request.data)
 #         if serializer.is_valid():
@@ -66,7 +66,8 @@ from .serializer import PostSerializer
 #         return Response(serializer.errors , status = status.HTTP_400_BAD_REQUEST)
 #
 #     def delete(self, request, post_id):
-#         post = get_object(self, post_id)
+#         post = get_object(object_id = post_id , object = Post)
+
 #         post.delete()
 #         return Response(status = status.HTTP_204_NO_CONTENT)
 
