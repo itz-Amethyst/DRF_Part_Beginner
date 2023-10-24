@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from rest_framework import generics , mixins
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination, LimitOffsetPagination
+from rest_framework.authentication import BasicAuthentication
 
 from Todo_Module.models import Todo
 from Todo_Module.serializer import TodoSerializer , UserSerializer
@@ -126,7 +127,8 @@ class TodosDetailMixinApiView(mixins.RetrieveModelMixin , mixins.UpdateModelMixi
 class TodosGenericApiView(generics.ListCreateAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
-    permission_classes = [permissions.AllowAny]
+    authentication_classes = [BasicAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
     # only work for this api with some customs
     pagination_class = TodosGenericApiViewOptions
 
