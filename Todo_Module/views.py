@@ -7,6 +7,7 @@ from rest_framework import status , permissions
 from rest_framework.views import APIView
 from rest_framework import generics , mixins
 from rest_framework import viewsets
+from rest_framework.pagination import PageNumberPagination, LimitOffsetPagination
 
 from Todo_Module.models import Todo
 from Todo_Module.serializer import TodoSerializer , UserSerializer
@@ -16,6 +17,21 @@ from utils.CustomMethods import get_object
 # Create your views here.
 
 User = get_user_model()
+
+#! Options
+class TodosGenericApiViewOptions(PageNumberPagination):
+    invalid_page_message = 'This is a invalid message'
+    last_page_strings = ('last',)
+    page_size = 2
+    page_query_description = 'tests tsfsd fdsgds page query'
+    page_size_query_description = 'Number of results to return per page.'
+
+
+class TodosViewSetsAPiViewOptions(LimitOffsetPagination):
+    # Same as page_size
+    default_limit = 1
+
+
 
 def Index( request ):
     context = {
@@ -111,6 +127,8 @@ class TodosGenericApiView(generics.ListCreateAPIView):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
     permission_classes = [permissions.AllowAny]
+    # only work for this api with some customs
+    pagination_class = TodosGenericApiViewOptions
 
 
 class TodosDetailGenericApiView(generics.RetrieveUpdateDestroyAPIView):
@@ -126,7 +144,11 @@ class TodosViewSetApiView(viewsets.ModelViewSet):
     queryset = Todo.objects.all()
     serializer_class = TodoSerializer
     permission_classes = [permissions.AllowAny]
+    # This without options
+    # pagination_class = LimitOffsetPagination
 
+    # with options
+    pagination_class = TodosViewSetsAPiViewOptions
 
 #endregion
 
