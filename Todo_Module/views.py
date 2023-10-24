@@ -93,7 +93,7 @@ def Index( request ):
 class TodosListMixinApiView(mixins.ListModelMixin , mixins.CreateModelMixin , generics.GenericAPIView):
     queryset = Todo.objects.order_by('-priority').all()
     serializer_class = TodoSerializer
-    permission_classes = [permissions.AllowAny]
+    # permission_classes = [permissions.AllowAny]
 
     def get( self , request: Request ):
         return self.list(request)

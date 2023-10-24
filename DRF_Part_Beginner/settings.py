@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'Todo_Module',
     'rest_framework',
     'rest_framework_swagger',
-    'drf_yasg'
+    'drf_yasg',
+    'rest_framework.authtoken'
 ]
 
 
@@ -142,7 +143,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated'
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.BasicAuthentication'
+        'rest_framework.authentication.TokenAuthentication'
     ],
     # Global default pagination !
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',

@@ -21,6 +21,7 @@ from django.urls import path, include
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
+from rest_framework.authtoken.views import obtain_auth_token
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -37,5 +38,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('posts/', include('API.urls2')),
     path('api-auth/', include('rest_framework.urls')),
+    # IT's better to use with postman and ...
+    path('auth-token/', obtain_auth_token, name ='generate_auth_token'),
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
 ]
