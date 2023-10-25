@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth import get_user_model
 
+from drf_spectacular.utils import extend_schema , OpenApiResponse
+
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework import status , permissions
@@ -8,7 +10,7 @@ from rest_framework.views import APIView
 from rest_framework import generics , mixins
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination, LimitOffsetPagination
-from rest_framework.authentication import BasicAuthentication
+from rest_framework.authentication import BasicAuthentication, TokenAuthentication
 
 from Todo_Module.models import Todo
 from Todo_Module.serializer import TodoSerializer , UserSerializer
@@ -90,14 +92,30 @@ def Index( request ):
 
 ##region Mixin Parts
 
+
 class TodosListMixinApiView(mixins.ListModelMixin , mixins.CreateModelMixin , generics.GenericAPIView):
     queryset = Todo.objects.order_by('-priority').all()
     serializer_class = TodoSerializer
+    authentication_classes = [TokenAuthentication]
     # permission_classes = [permissions.AllowAny]
 
+    @extend_schema(
+        request = TodoSerializer ,
+        responses = {201: TodoSerializer} ,
+        description = 'this api is used for get all todos list'
+    )
     def get( self , request: Request ):
         return self.list(request)
 
+    @extend_schema(
+        summary = 'Todo Registration' ,
+        description = "This is POST method api, in which user data will be created and using the same user instance one Employee instance will be created" ,
+        request = TodoSerializer ,
+        responses = {
+            200: OpenApiResponse(description = 'Json Response') ,
+            400: OpenApiResponse(description = 'Validation error')
+        }
+    )
     def post( self , request: Request ):
         return self.create(request)
 
