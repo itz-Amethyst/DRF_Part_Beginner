@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from drf_spectacular.views import SpectacularSwaggerView , SpectacularRedocView , SpectacularAPIView
 
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
@@ -48,5 +48,19 @@ urlpatterns = [
     path('api/token/' , TokenObtainPairView.as_view() , name = 'token_obtain_pair') ,
     path('api/token/refresh/' , TokenRefreshView.as_view() , name = 'token_refresh') ,
 
-    path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
+
+    #* Look like swagger
+    path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+
+
+    #! NOte when ever you want to use drf-spactacular you should config api/schema url first and run it to download a yaml file to work
+
+    #? down method its better and synced with jwt token authentication
+
+    # With Drf-spectacular with openapi
+    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    # Swagger UI:
+    path('api/schema/swagger-ui/' , SpectacularSwaggerView.as_view(url_name = 'schema') , name = 'swagger-ui') ,
+    # Redoc UI:
+    path('api/schema/redoc/' , SpectacularRedocView.as_view(url_name = 'schema') , name = 'redoc') ,
 ]

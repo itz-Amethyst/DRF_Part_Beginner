@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_swagger',
     'drf_yasg',
-    'rest_framework_simplejwt'
+    'rest_framework_simplejwt',
+    'drf_spectacular'
     # 'rest_framework.authtoken'
 ]
 
@@ -149,7 +150,10 @@ REST_FRAMEWORK = {
     ],
     # Global default pagination !
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 1
+    'PAGE_SIZE': 1,
+
+    # other DRF settings here for drf-spectacular
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 
@@ -161,4 +165,32 @@ SIMPLE_JWT = {
 
     #* Name type you enter at the first you can change this
     "AUTH_HEADER_TYPES": ("Bearer" ,) ,
+}
+
+
+# Custom
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Beginner API',
+    'DESCRIPTION': 'This is a Beginner API documentation.',
+    'VERSION': '1.0.0',
+    'COMPONENT_SPLIT_REQUEST': True,
+    'SERVE_INCLUDE_SCHEMA': False,
+    # Will appear in yaml file
+    'CONTACT' : {
+        'NAME': 'Milad',
+        'URL': "test.com"
+    },
+    'LICENSE':{
+        'NAME': 'Milad',
+        'URL': 'TE'
+    },
+
+    'DISABLE_ERRORS_AND_WARNINGS': True,
+
+    # IDK what are these
+    # 'SCHEMA_PATH_PREFIX': '/api/v1/test',
+    # 'SERVE_INCLUDE_SCHEMA': True,
+    # 'SERVE_PERMISSIONS': ["rest_framework.permissions.IsAuthenticated"],
+    # 'SERVE_AUTHENTICATION': False,
+    # 'SERVE_PUBLIC': True
 }
