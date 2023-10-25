@@ -46,8 +46,12 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'drf_yasg',
     'rest_framework_simplejwt',
-    'drf_spectacular'
+    'drf_spectacular',
     # 'rest_framework.authtoken'
+
+    # For React
+    'corsheaders',
+    'React_Employee'
 ]
 
 
@@ -59,7 +63,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
+
+
+# For React
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'DRF_Part_Beginner.urls'
 
@@ -150,7 +159,7 @@ REST_FRAMEWORK = {
     ],
     # Global default pagination !
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 1,
+    'PAGE_SIZE': 4,
 
     # other DRF settings here for drf-spectacular
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
