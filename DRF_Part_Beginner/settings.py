@@ -9,10 +9,10 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
 from pathlib import Path
 from datetime import timedelta
 
+import dj_database_url
 import rest_framework.authentication
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-ml9b+%4uee6!npjry6&m+)^5$5_xer*=__q5aj(_oye!0nj-##
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'rest_framework_simplejwt',
     'drf_spectacular',
+    'dj_database_url',
     # 'rest_framework.authtoken'
 
     # For React
@@ -95,13 +96,28 @@ WSGI_APPLICATION = 'DRF_Part_Beginner.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASE_URL = 'postgres://postgres:Bf*BffdbGCeeG2Ef1CDCC4fdf*A-G5fc@roundhouse.proxy.rlwy.net:33102/railway'
+# ENGINEBASHE = dj_database_url.config(default = DATABASE_URL)
 DATABASES = {
     'default': {
+        #! Default
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
+
+        #? Postgres Filtere
+        # 'ENGINE': 'django.db.backends.postgresql',
+        # 'ENGINE': ENGINEBASHE,
+        # 'NAME': 'railway',
+        # 'USER': 'postgres',
+        # 'PASSWORD': 'Bf*BffdbGCeeG2Ef1CDCC4fdf*A-G5fc',
+        # 'HOST': 'roundhouse.proxy.rlwy.net',
+        # 'PORT': '33102',
     }
 }
 
+#? Iran Vatanam filtere in option
+# DATABASES['default'] = dj_database_url.parse('postgres://postgres:Bf*BffdbGCeeG2Ef1CDCC4fdf*A-G5fc@roundhouse.proxy.rlwy.net:33102/railway', conn_max_age = 1000 )
+# print(DATABASES)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
