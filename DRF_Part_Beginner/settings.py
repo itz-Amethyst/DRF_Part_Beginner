@@ -11,13 +11,15 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 from pathlib import Path
 from datetime import timedelta
+import os
+from dotenv import load_dotenv
+
 
 import dj_database_url
 import rest_framework.authentication
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -26,7 +28,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ml9b+%4uee6!npjry6&m+)^5$5_xer*=__q5aj(_oye!0nj-##'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
+load_dotenv()
+ENVIRONMENT = os.getenv('ENVIRONMENT', default = 'Test')
+print(ENVIRONMENT)
+
+DEBUG = True if ENVIRONMENT == "Development" else False
 
 ALLOWED_HOSTS = ['*']
 
